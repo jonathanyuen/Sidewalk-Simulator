@@ -27,7 +27,7 @@ function love.load()
     Lanes = lanes:new()
     Background = background:new()
     Foreground = foreground:new(Lanes)
-    Spawner = spawner:new()
+    Spawner = spawner:new(Player, Lanes) --- IGNORE ---
     GameScore = score:new()
     NPCs = {}
     CollisionManager = collisionManager:new(Player, NPCs)
@@ -46,6 +46,7 @@ function love.draw()
     end
     CollisionManager:draw()
     GameScore:draw()
+    Spawner:draw()
 end
 
 function love.update(dt)
@@ -80,7 +81,5 @@ function love.keypressed(key)
     for _, npc in ipairs(NPCs) do
         npc:debug(key)
     end
-
-    
 end
 

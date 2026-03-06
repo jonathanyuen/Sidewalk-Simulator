@@ -10,7 +10,8 @@ function Template:new(o)
     o.name = o.name or "Template NPC"
     o.width = o.width or Config.ChunkSize
     o.height = o.height or Config.ChunkSize * 2
-    o.x = o.x or Config.ScreenWidth 
+    o.spawnX = o.spawnX or Config.ScreenWidth
+    o.x = o.x or o.spawnX
     o.y = o.y or ScreenHeight/2 - o.height/2 - Config.ChunkSize -- offset the Y by a bit to align with lanes
     o.offset = o.offset or 30 -- offset the y position
     o.color = o.color or {1, 1, 1}

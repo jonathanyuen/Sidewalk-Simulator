@@ -9,13 +9,27 @@ local SpeedWalker = require "src.npcs.speedWalker"
 local Spawner = {}
 Spawner.__index = Spawner
 
-function Spawner:new(npcList)
+function Spawner:new(player, lanes)
     local o = {}
     setmetatable(o, Spawner)
-    o.npcList = npcList or NPCs or {}
+    o.player = player
+    o.lanes = lanes
     o.spawnTimer = 0
     o.nextSpawn = o:nextSpawnTime(0)
+    
+    -- buffer zone
+    o.bufferZone = {
+        x = player.x - (Config.ChunkSize / 2),  -- x
+        y = lanes.lane1.y, -- y
+        width = Config.ChunkSize * 4, -- width
+        height = Config.ChunkSize * 4 -- height 
+    }
+
     return o
+end
+
+function Spawner:draw()
+    self:drawBufferZone()
 end
 
 -- Call this in love.update(dt)
@@ -63,11 +77,23 @@ function Spawner:update(dt, score)
         else
             npc = AvgJoe:new()
         end
-        if npc then
+
+        if npc and not self:willOverlapBufferZone(npc) then
             npc.lane = laneNum
             table.insert(NPCs, npc)
         end
     end
+
+    -- Despawn NPCs that go off screen
+    for i, npc in ipairs(NPCs) do
+        print("Checking NPC at x: " .. npc.x)
+        if npc.x + npc.width < 0 then
+            print("Despawning NPC at x: " .. npc.x)
+            table.remove(NPCs, i)
+        end
+    end
+
+    print("Number of NPCs: " .. #NPCs)
 end
 
 
@@ -131,6 +157,43 @@ function Spawner:nextSpawnTime(score)
 
     local randomInterval = math.random(spawnMin, spawnMax) / 10
     return randomInterval
+end
+
+function Spawner:willOverlapBufferZone(newNpc)
+    local bufferStart = self.bufferZone.x
+    local bufferEnd = bufferStart + self.bufferZone.width
+    local npcWidth = newNpc.width
+    local npcSpeed = newNpc.walkSpeed
+    local npcSpawnX = newNpc.spawnX
+
+    -- When will the new NPC enter and exit the buffer zone?
+    local newEnter = (npcSpawnX - bufferEnd) / npcSpeed
+    local newExit  = (npcSpawnX - bufferStart - npcWidth) / npcSpeed
+
+    for _, npc in ipairs(NPCs) do
+        local existingEnter = (npc.x - bufferEnd) / npc.walkSpeed
+        local existingExit  = (npc.x - bufferStart - npc.width) / npc.walkSpeed
+
+        -- Check for overlap in time intervals
+        if not (newExit < existingEnter or newEnter > existingExit) then
+            return true -- Overlap detected
+        end
+    end
+    return false -- No overlap
+end
+
+
+function Spawner:drawBufferZone()
+    if(Config.DebugToggle) then
+        love.graphics.setColor(1, 0, 0, 0.5)
+        love.graphics.rectangle(
+        "fill", 
+        self.bufferZone.x, -- x
+        self.bufferZone.y, -- y
+        self.bufferZone.width, -- width
+        self.bufferZone.height -- height
+    )
+    end
 end
 
 return Spawner
