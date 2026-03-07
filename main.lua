@@ -26,7 +26,7 @@ function love.load()
     Player = player:new()
     Lanes = lanes:new()
     Background = background:new()
-    Foreground = foreground:new(Lanes)
+    Foreground = foreground:new()
     Spawner = spawner:new(Player, Lanes) --- IGNORE ---
     GameScore = score:new()
     NPCs = {}
@@ -59,6 +59,7 @@ function love.update(dt)
     GameScore:update()
     Background:update(dt)
     Lanes:update(dt)
+    Foreground:update(dt)
 end
 
 

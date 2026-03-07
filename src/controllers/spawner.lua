@@ -5,6 +5,7 @@ local Helper = require "utils.helper"
 local AvgJoe = require "src.npcs.avgJoe"
 local TheDistracted = require "src.npcs.theDistracted"
 local SpeedWalker = require "src.npcs.speedWalker"
+local Granny = require "src.npcs.granny"
 
 local Spawner = {}
 Spawner.__index = Spawner
@@ -19,7 +20,7 @@ function Spawner:new(player, lanes)
     
     -- buffer zone
     o.bufferZone = {
-        x = player.x - (Config.ChunkSize / 2),  -- x
+        x = lanes.lane1.x + (Config.ChunkSize),  -- x
         y = lanes.lane1.y, -- y
         width = Config.ChunkSize * 4, -- width
         height = Config.ChunkSize * 4 -- height 
@@ -36,22 +37,26 @@ end
 function Spawner:update(dt, score)
     self.spawnTimer = self.spawnTimer + dt
 
+    local getNPC = function(npcType)
+        if npcType == "AvgJoe" then
+            return AvgJoe:new()
+        elseif npcType == "TheDistracted" then
+            return TheDistracted:new()
+        elseif npcType == "Granny" then
+            return Granny:new()
+        elseif npcType == "SpeedWalker" then
+            return SpeedWalker:new()
+        else
+            return AvgJoe:new() -- default NPC type
+        end
+    end
+
     -- If no NPCs exist, spawn one immediately
     if #NPCs == 0 then
         local laneNum = math.random(1, 2)
-        
         local npcType = self:getRandomSpawn(score)
-        local npc
+        local npc = getNPC(npcType)
 
-        if npcType == "AvgJoe" then
-            npc = AvgJoe:new()
-        elseif npcType == "TheDistracted" then
-            npc = TheDistracted:new()
-        elseif npcType == "SpeedWalker" then
-            npc = SpeedWalker:new()
-        else
-            npc = AvgJoe:new()
-        end
         if npc then
             npc.lane = laneNum
             table.insert(NPCs, npc)
@@ -67,16 +72,7 @@ function Spawner:update(dt, score)
         self.nextSpawn = self:nextSpawnTime(score)
         local laneNum = math.random(1, 2)
         local npcType = self:getRandomSpawn(score)
-        local npc
-        if npcType == "AvgJoe" then
-            npc = AvgJoe:new()
-        elseif npcType == "TheDistracted" then
-            npc = TheDistracted:new()
-        elseif npcType == "SpeedWalker" then
-            npc = SpeedWalker:new()
-        else
-            npc = AvgJoe:new()
-        end
+        local npc = getNPC(npcType)
 
         if npc and not self:willOverlapBufferZone(npc) then
             npc.lane = laneNum
@@ -86,14 +82,14 @@ function Spawner:update(dt, score)
 
     -- Despawn NPCs that go off screen
     for i, npc in ipairs(NPCs) do
-        print("Checking NPC at x: " .. npc.x)
         if npc.x + npc.width < 0 then
-            print("Despawning NPC at x: " .. npc.x)
             table.remove(NPCs, i)
         end
     end
 
-    print("Number of NPCs: " .. #NPCs)
+    if(Config.DebugToggle) then
+       print("Number of NPCs: " .. #NPCs)
+    end
 end
 
 
@@ -104,7 +100,8 @@ function Spawner:getRandomSpawn(score)
     }
 
     local easyNpcTypes = {
-        "TheDistracted"
+        "TheDistracted",
+        "Granny"
     }
 
     local medNPCTypes = {
@@ -141,19 +138,18 @@ function Spawner:getRandomSpawn(score)
 end
 
 function Spawner:nextSpawnTime(score)
-    local spawnMin, spawnMax = 10, 50
+    local spawnMin, spawnMax = 10, 20
 
-    if score >= 50 then
-        spawnMin, spawnMax = 10, 40
-    end
-
-    if score >= 100 then
-        spawnMin, spawnMax = 10, 35
-    end
-
-    if score >= 200 then
-        spawnMin, spawnMax = 10, 30
-    end
+    if score >= 50 then spawnMin, spawnMax = 10, 15 end
+    if score >= 100 then spawnMin, spawnMax = 8, 12 end
+    if score >= 150 then spawnMin, spawnMax = 8, 10 end
+    if score >= 200 then spawnMin, spawnMax = 5, 10 end
+    if score >= 300 then spawnMin, spawnMax = 5, 8 end
+    if score >= 400 then spawnMin, spawnMax = 4, 5 end
+    if score >= 500 then spawnMin, spawnMax = 2, 5 end
+    if score >= 600 then spawnMin, spawnMax = 1, 4 end
+    if score >= 700 then spawnMin, spawnMax = 1, 2 end
+    if score >= 800 then spawnMin, spawnMax = 1, 1 end
 
     local randomInterval = math.random(spawnMin, spawnMax) / 10
     return randomInterval
