@@ -15,7 +15,7 @@ function SpeedWalker:new(lanes)
     o.name = "Speed Walker"
     o.image = love.graphics.newImage("assets/npc/speedwalker.png")
     o.scale = 1
-    o.walkSpeed = 750
+    o.walkSpeed = 750 * Config.SpeedMultiplier
     o.lanes = lanes
     return o
 end

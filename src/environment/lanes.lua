@@ -31,7 +31,7 @@ function Lanes:new()
     }
     o.assetStack = {}
     for i, asset in ipairs(o.assets) do o.assetStack[i] = asset end
-    o.scrollSpeed = 150
+    o.scrollSpeed = 150 * config.SpeedMultiplier
     o.scrollOffset = 50
     o.xOffset = 0
     o.scene = o:buildScene() -- rebuild scene with new assets

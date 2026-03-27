@@ -12,7 +12,7 @@ function AvgJoe:new(lanes)
     o.name = o.name or "Average Joe"
     o.image = love.graphics.newImage("assets/npc/avgJoe-2x.png")
     o.lanes = lanes
-    o.walkSpeed = math.random(225, 275)
+    o.walkSpeed = math.random(225, 275)  * Config.SpeedMultiplier
     return o
 end
 

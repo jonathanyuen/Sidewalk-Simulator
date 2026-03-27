@@ -14,7 +14,7 @@ function ScrollingEnvironment:new()
     o.assetStack = {}
     for i, asset in ipairs(o.assets) do o.assetStack[i] = asset end
     o.maxSceneSize = math.ceil(ScreenWidth / (o.assets[1]:getWidth() * 2)) + 2 -- calculate how many tiles we need to fill the screen, plus one for seamless scrolling
-    o.scrollSpeed = 75 -- default scroll speed
+    o.scrollSpeed = 75 * config.SpeedMultiplier-- default scroll speed
     o.scrollOffset = 50 -- default offset for safety, extra padding
     o.xOffset = 0
     o.y = 0

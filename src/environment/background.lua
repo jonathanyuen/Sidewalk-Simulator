@@ -15,7 +15,7 @@ function Background:new()
     }
     o.assetStack = {}
     for i, asset in ipairs(o.assets) do o.assetStack[i] = asset end
-    o.scrollSpeed = 25 -- default scroll speed, can be set externally
+    o.scrollSpeed = 25  * config.SpeedMultiplier-- default scroll speed, can be set externally
     o.scale = 2 -- default scale
     o.scene = o:buildScene() -- rebuild scene with new assets
     return o
