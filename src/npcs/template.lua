@@ -57,7 +57,12 @@ function Template:walk(dt)
 end
 
 function Template:moveToLane(targetLane, dt)
-    local targetY = ScreenHeight/2 - self.height/2 - Config.ChunkSize -- default to lane 0
+    local targetY
+    if targetLane == 0 then
+        targetY = ScreenHeight/2 - self.height/2 - Config.ChunkSize
+    else
+        targetY = ScreenHeight/2 + self.height/2 - Config.ChunkSize
+    end
 
     if self.y < targetY then
         self.y = math.min(self.y + self.laneChangeSpeed * dt, targetY)
