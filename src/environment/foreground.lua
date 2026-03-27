@@ -19,7 +19,7 @@ function Foreground:new()
     o.assetStack = {}
     o.y = Config.ScreenHeight - o.assets[1]:getHeight() * o.scale
     for i, asset in ipairs(o.assets) do o.assetStack[i] = asset end
-    o.scrollSpeed = 150 * Config.SpeedMultiplier-- default scroll speed, can be set externally
+    o.scrollSpeed = 150 * Config.SpeedMultiplier -- default scroll speed, can be set externally
     o.scale = 2 -- default scale
     o.scene = o:buildScene() -- rebuild scene with new assets
     return o
