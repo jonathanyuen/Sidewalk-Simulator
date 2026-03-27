@@ -62,6 +62,9 @@ function Spawner:update(dt, score)
 
         if npc then
             npc.lane = laneNum
+            npc.bufferZone = self.bufferZone
+            npc.player = self.player
+
             table.insert(NPCs, npc)
         end
         self.spawnTimer = 0
@@ -79,6 +82,8 @@ function Spawner:update(dt, score)
 
         if npc and not self:willOverlapBufferZone(npc) then
             npc.lane = laneNum
+            npc.bufferZone = self.bufferZone
+            npc.player = self.player
             table.insert(NPCs, npc)
         end
     end
@@ -109,7 +114,7 @@ function Spawner:getRandomSpawn(score)
 
     local medNPCTypes = {
         "SpeedWalker",
-        -- "Ghost" -- needs works
+        "Ghost"
     }
     local hardNPCTypes = {}
 

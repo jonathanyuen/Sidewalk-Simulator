@@ -28,6 +28,7 @@ function CollisionManager:checkCollisions()
     for _, npc in ipairs(self.npcs) do
         local npcHitbox = npc:hitbox()
         if self:hitboxCollision(playerHitbox, npcHitbox) then
+            npc.colliding = true
             anyCollision = true
             self.collisionDetected = true
             if self.collisionOver == true then
@@ -36,6 +37,8 @@ function CollisionManager:checkCollisions()
             end
             self.collisionMessage = "Collision with " .. npc.name .. "! Health: " .. self.player.health
             break
+        else
+            npc.colliding = false
         end
     end
 
