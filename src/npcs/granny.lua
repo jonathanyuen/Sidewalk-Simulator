@@ -12,7 +12,7 @@ function Granny:new(lanes)
     o.name = o.name or "Granny"
     o.image = love.graphics.newImage("assets/npc/granny.png")
     o.lanes = lanes
-    o.walkSpeed = 175 -- slower than average joe
+    o.walkSpeed = 175  * Config.SpeedMultiplier
     return o
 end
 

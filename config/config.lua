@@ -12,5 +12,6 @@ return {
         reset = {"r"},
         pause = {"escape"}
     },
+    SpeedMultiplier = 1,
     DebugToggle = false
 }

@@ -15,7 +15,7 @@ function Template:new(o)
     o.y = o.y or ScreenHeight/2 - o.height/2 - Config.ChunkSize -- offset the Y by a bit to align with lanes
     o.offset = o.offset or math.random(30, 60) -- offset the y position
     o.color = o.color or {1, 1, 1}
-    o.walkSpeed = 250
+    o.walkSpeed = 250 * Config.SpeedMultiplier
     o.laneChangeSpeed = 100
     o.lane = 1 -- binary lane system, 0 is the top lane, 1 is the bottom lane
     o.drawHitbox = false

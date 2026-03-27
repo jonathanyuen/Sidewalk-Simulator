@@ -14,7 +14,7 @@ function Ghost:new()
     -- defaults
     o.name = o.name or "Ghost"
     o.image = love.graphics.newImage("assets/npc/ghost.png")
-    o.walkSpeed = 175
+    o.walkSpeed = 175  * Config.SpeedMultiplier
     o.fadeTimer = 0
     o.fadeDuration = 2 -- seconds for full fade in/out
     o.fadeDirection = 1 -- 1 = fade in, -1 = fade out
