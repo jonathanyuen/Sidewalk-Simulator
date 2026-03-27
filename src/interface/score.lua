@@ -44,7 +44,7 @@ function Score:draw()
     love.graphics.setFont(self.font)
     love.graphics.setColor(0,0,0)
     love.graphics.print("Score: " .. tostring(self.score), scorePos.x, scorePos.y)
-    love.graphics.print(string.format("Speed: %.1f mph", 10 * Config.SpeedMultiplier), scorePos.x, scorePos.y + 30)
+    love.graphics.print(string.format("Speed: %d mph", 10 * Config.SpeedMultiplier), scorePos.x, scorePos.y + 30)
 end
 
 function Score:reset()
