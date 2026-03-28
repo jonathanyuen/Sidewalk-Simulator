@@ -26,7 +26,7 @@ function Spawner:new(player, lanes)
     o.bufferZone = {
         x = lanes.lane1.x + (Config.ChunkSize),  -- x
         y = lanes.lane1.y, -- y
-        width = Config.ChunkSize * 4, -- width
+        width = Config.ChunkSize * 5, -- width
         height = Config.ChunkSize * 4 -- height 
     }
 

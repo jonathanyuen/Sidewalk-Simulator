@@ -50,7 +50,8 @@ function TheDistracted:walk(dt)
     -- we don't want the NPC to lane change into the player
     local playerWidth = Config.ChunkSize * 2
     local playerSafeZone = playerWidth + (Config.ChunkSize * 2)
-    if self.x >  playerSafeZone then
+    
+    if self.x > playerSafeZone and not self:inBufferZone() then
         self:switchLaneTimer(dt)
     end
 

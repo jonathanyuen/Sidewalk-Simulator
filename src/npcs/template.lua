@@ -90,6 +90,13 @@ function Template:hitbox()
     }
 end
 
+function Template:inBufferZone()
+    if not self.bufferZone then return false end
+    local bx = self.bufferZone.x
+    local bEnd = bx + self.bufferZone.width
+    return self.x < bEnd and self.x + self.width > bx
+end
+
 function Template:debug(key)
     if key == "`" then
         self.drawHitbox = not self.drawHitbox
