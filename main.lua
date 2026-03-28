@@ -28,7 +28,7 @@ function love.load()
     Lanes = lanes:new()
     Background = background:new()
     Foreground = foreground:new()
-    Spawner = spawner:new(Player, Lanes) --- IGNORE ---
+    Spawner = spawner:new(Player, Lanes)
     GameScore = score:new()
     PauseMenu = pauseMenu:new()
     NPCs = {}

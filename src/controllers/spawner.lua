@@ -1,5 +1,6 @@
 local Config = require "config.config"
 local Helper = require "utils.helper"
+local SpecialEvent = require "src.controllers.specialEvent"
 
 --NPCs
 local AvgJoe = require "src.npcs.avgJoe"
@@ -18,6 +19,8 @@ function Spawner:new(player, lanes)
     o.lanes = lanes
     o.spawnTimer = 0
     o.nextSpawn = o:nextSpawnTime(0)
+
+    o.specialEvent = SpecialEvent:new(player, lanes)
     
     -- buffer zone
     o.bufferZone = {
@@ -37,6 +40,17 @@ end
 -- Call this in love.update(dt)
 function Spawner:update(dt, score)
     self.spawnTimer = self.spawnTimer + dt
+
+    -- special events starts after 100
+    if score > 100 then
+        self.specialEvent:spawnEvent(dt)
+
+        -- override spawner with event if one is active
+        if self.specialEvent.eventActive then
+            self.specialEvent:specialEventRunner(self.specialEvent.currentEvent, dt)
+            return
+        end
+    end
 
     local getNPC = function(npcType)
         if npcType == "AvgJoe" then
