@@ -13,5 +13,6 @@ return {
         pause = {"escape"}
     },
     SpeedMultiplier = 1,
+    MaxSpeedMultiplier = 3,
     DebugToggle = false
 }

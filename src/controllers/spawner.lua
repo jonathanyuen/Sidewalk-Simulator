@@ -103,8 +103,8 @@ function Spawner:update(dt, score)
     end
 
     -- Despawn NPCs that go off screen
-    for i, npc in ipairs(NPCs) do
-        if npc.x + npc.width < 0 then
+    for i = #NPCs, 1, -1 do
+        if NPCs[i].x + NPCs[i].width < 0 then
             table.remove(NPCs, i)
         end
     end

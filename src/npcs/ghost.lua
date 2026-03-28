@@ -4,6 +4,7 @@ local Template = require "src.npcs.template"
 
 local Ghost = setmetatable({}, {__index = Template})
 Ghost.__index = Ghost
+Ghost.image = love.graphics.newImage("assets/npc/ghost.png")
 
 -- Ghost moves slow and sneaks up on the player.
 -- Comes in and out of visibility
@@ -13,7 +14,7 @@ function Ghost:new()
     setmetatable(o, Ghost)
     -- defaults
     o.name = o.name or "Ghost"
-    o.image = love.graphics.newImage("assets/npc/ghost.png")
+    o.image = Ghost.image
     o.walkSpeed = 175  * Config.SpeedMultiplier
     o.fadeTimer = 0
     o.fadeDuration = 2 -- seconds for full fade in/out

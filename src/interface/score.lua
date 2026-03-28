@@ -30,7 +30,8 @@ function Score:increaseSpeed()
     local newSpeedLevel = math.floor(self.score / pointsPerSpeedLevel)
     
     if newSpeedLevel > self.speedLevel then
-        Config.SpeedMultiplier = Config.SpeedMultiplier + (speedIncrease * (newSpeedLevel - self.speedLevel))
+        local maxSpeed = Config.MaxSpeedMultiplier or 3
+        Config.SpeedMultiplier = math.min(Config.SpeedMultiplier + (speedIncrease * (newSpeedLevel - self.speedLevel)), maxSpeed)
         self.speedLevel = newSpeedLevel
     end
 end

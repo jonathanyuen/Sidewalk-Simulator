@@ -18,6 +18,7 @@ local pauseMenu = require "src.interface.pauseMenu"
 -- Game state management
 local collisionManager = require "src.controllers.collisionManager"
 local spawner = require "src.controllers.spawner"
+local Debug = require "src.interface.debug"
 
 function love.load()
     ScreenWidth, ScreenHeight = config.ScreenWidth, config.ScreenHeight
@@ -31,6 +32,8 @@ function love.load()
     Spawner = spawner:new(Player, Lanes)
     GameScore = score:new()
     PauseMenu = pauseMenu:new()
+    DebugHUD = Debug:new()
+
     NPCs = {}
     CollisionManager = collisionManager:new(Player, NPCs)
     FrameCount = 0
@@ -51,6 +54,7 @@ function love.draw()
     GameScore:draw()
     Spawner:draw()
     PauseMenu:draw()
+    DebugHUD:drawDebugInfo()
 end
 
 function love.update(dt)

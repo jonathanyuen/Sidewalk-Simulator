@@ -4,16 +4,16 @@ local Config = require "config.config"
 
 local TheDistracted = setmetatable({}, {__index = Template})
 TheDistracted.__index = TheDistracted
-
+TheDistracted.image = love.graphics.newImage("assets/npc/distracted.png")
 
 function TheDistracted:new(lanes)
     -- inherit Template
     local o = Template:new()
     setmetatable(o, TheDistracted)
-    
+
     -- Overrride
     o.name = "The Distracted"
-    o.image = love.graphics.newImage("assets/npc/distracted.png")
+    o.image = TheDistracted.image
     o.lane = o.lane or 1
     o.laneSwitchTimer = 0
     o.laneSwitchInterval = math.random(1, 3) -- switch lanes every 2-5 seconds
