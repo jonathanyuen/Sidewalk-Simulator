@@ -21,14 +21,15 @@ function Spawner:new(player, lanes)
     o.nextSpawn = o:nextSpawnTime(0)
 
     o.specialEvent = SpecialEvent:new(player, lanes)
-    
+
     -- buffer zone
     o.bufferZone = {
         x = lanes.lane1.x + (Config.ChunkSize),  -- x
         y = lanes.lane1.y, -- y
         width = Config.ChunkSize * 5, -- width
-        height = Config.ChunkSize * 4 -- height 
+        height = Config.ChunkSize * 4 -- height
     }
+    o.specialEvent.bufferZone = o.bufferZone
 
     return o
 end

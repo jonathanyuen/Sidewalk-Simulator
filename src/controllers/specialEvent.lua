@@ -63,7 +63,7 @@ end
 function SpecialEvent:specialEventRunner(event,dt)
     if event == "speedWalkerRace" then
         self:speedWalkerRace(dt)
-    elseif event == "horor" then 
+    elseif event == "horror" then
         self:horrorShow(dt)
     end
 end
@@ -126,6 +126,7 @@ function SpecialEvent:horrorShow(dt)
         local npc = Ghost:new(self.lanes)
         npc.lane = math.random(1, 2)
         npc.player = self.player
+        npc.bufferZone = self.bufferZone
         table.insert(NPCs, npc)
     end
 end
