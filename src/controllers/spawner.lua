@@ -1,5 +1,6 @@
 local Config = require "config.config"
 local Helper = require "utils.helper"
+local SpecialEvent = require "controllers.specialEvent"
 
 --NPCs
 local AvgJoe = require "src.npcs.avgJoe"
@@ -18,6 +19,8 @@ function Spawner:new(player, lanes)
     o.lanes = lanes
     o.spawnTimer = 0
     o.nextSpawn = o:nextSpawnTime(0)
+
+    o.specialEvent = SpecialEvent:new()
     
     -- buffer zone
     o.bufferZone = {
